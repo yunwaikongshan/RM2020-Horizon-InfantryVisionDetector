@@ -65,34 +65,11 @@ ubuntu环境下使用qt打开以pro为后缀的文件，在FindArmor\ImageProces
   - 利用颜色权重进行颜色分割，灰度二值化，将灰度二值图与颜色分割图做差，去除干扰，并对最终二值图进行形态学及滤波操作。必要情况搭配滤光片辅助。
   - 寻找轮廓并进行椭圆拟合得到疑似灯条集合。
   - 灯条两两组合得到疑似装甲。
-  - 装甲集合进行二次筛选去除粘连装甲，如下图所示其中序号2为正确装甲而序号1和3为错误装甲，二次筛选利用共用灯条等信息去除错误装甲。
-    <center>
-    <img style="border-radius: 0.3125em;
-    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
-    src="装甲粘连示意图.png" width = "95%" alt=""/>
-    <br>
-    <div style="color:orange; 1px solid #d9d9d9;
-    display: inline-block;
-    color: #999;
-    padding: 2px;">
-      装甲粘连示意图
-  	</div>
-</center>
-
+  - 装甲集合进行二次筛选去除粘连装甲，如下图所示其中序号2为正确装甲而序号1和3为错误装甲，二次筛选利用共用灯条等信息去除错误装甲,如下示意.
+ ![装甲粘连示意图](Image/装甲粘连示意图.png)
   - 第三次筛选装甲集合，将装甲集合安装与上一帧识别装甲中心距排序，对于最近目标判断中心距是否满足一定确定阈值，满足则确认目标连续与上一帧目标相同，否则判断目标装甲号码，相同则目标连续否则切换目标。切换目标时将装甲集合按灯条高度排序，依次识别装甲号码，期间可搭配一定策略，如跳过工程机器人，当目标号码符合可击打要求时确定击打当前目标，并记录装甲号码。
 
-<center>
-    <img style="border-radius: 0.3125em;
-    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
-    src="装甲检测流程图.png" width = "95%" alt=""/>
-    <br>
-    <div style="color:orange; 1px solid #d9d9d9;
-    display: inline-block;
-    color: #999;
-    padding: 2px;">
-      装甲检测流程图
-  	</div>
-</center>
+![装甲检测流程图](Image/装甲检测.png)
 
 ### 陀螺检测：
   - 利用小孔成像模型和投影关系估算目标装甲当前相对中心的偏转角度，并利用左右灯条关系确定相对于中心点的左右关系，左负右正区分左右。
@@ -101,31 +78,10 @@ ubuntu环境下使用qt打开以pro为后缀的文件，在FindArmor\ImageProces
   - 利用最小二乘法和所保留的位置坐标计算目标陀螺运动圆心和半径用于下一步的计算。
   - 计算旋转速度结合卡尔曼滤波得到最佳估计，计算预测位置。
 
-  <center>
-    <img style="border-radius: 0.3125em;
-    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
-    src="陀螺检测算法介绍.png" width = "50%" alt=""/>
-    <br>
-    <div style="color:orange; 1px solid #d9d9d9;
-    display: inline-block;
-    color: #999;
-    padding: 2px;">
-      陀螺检测算法及部分原理介绍
-  	</div>
-</center>
-
-  <center>
-    <img style="border-radius: 0.3125em;
-    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
-    src="陀螺检测流程图.png" width = "80%" alt=""/>
-    <br>
-    <div style="color:orange; 1px solid #d9d9d9;
-    display: inline-block;
-    color: #999;
-    padding: 2px;">
-      陀螺检测流程图
-  	</div>
-</center>
+算法介绍:  
+![陀螺检测算法介绍](Image/陀螺检测算法介绍.png)
+陀螺检测流程图:  
+![陀螺检测流程图](Image/陀螺检测.png)
 
 ### 移动预测：
 
@@ -133,19 +89,7 @@ ubuntu环境下使用qt打开以pro为后缀的文件，在FindArmor\ImageProces
   - 利用帧差和程序运行过程所记录时间计算目标x，y，z轴移动速度，并放入卡尔曼滤波得到速度和位置的最佳估计。
   - 计算预测点，绝对坐标转为云台相对的偏转角度，并发送stm32。  
 
-  <center>
-    <img style="border-radius: 0.3125em;
-    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
-    src="移动预测流程图.png" width = "95%" alt=""/>
-    <br>
-    <div style="color:orange; 1px solid #d9d9d9;
-    display: inline-block;
-    color: #999;
-    padding: 2px;">
-      移动预测流程图
-  	</div>
-</center>
-
+![移动预测流程图](Image/移动预测流程图.png)
 ### 大符识别：
 
   - 灰度二值化及形态学和滤波操作，得到完整的风车二值图像。
@@ -153,18 +97,8 @@ ubuntu环境下使用qt打开以pro为后缀的文件，在FindArmor\ImageProces
   - 利用椭圆拟合和特征进行筛选找到疑似扇叶
   - 利用轮廓层级关系和内轮廓特征筛选扇叶，找到待击打扇叶。
   
-    <center>
-    <img style="border-radius: 0.3125em;
-    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
-    src="能量机关检测.png" width = "95%" alt=""/>
-    <br>
-    <div style="color:orange; 1px solid #d9d9d9;
-    display: inline-block;
-    color: #999;
-    padding: 2px;">
-      能量机关检测流程图
-  	</div>
-</center>
+
+![能量机关检测流程图](Image/能量机关检测.png)
 
 ### 大符击打：
   - 单目测距得到相机坐标系下相对坐标，并记录。
@@ -173,19 +107,8 @@ ubuntu环境下使用qt打开以pro为后缀的文件，在FindArmor\ImageProces
   - 根据法向量计算风车平面相对相机平面的偏转角，并利用坐标系旋转变换得到正对下枪口绝对坐标，三维空间转二维计算，简化计算过程。
   - 利用卡尔曼滤波计算旋转速度结合程序运行绝对时间拟合判断大小符。
   - 计算预测点，绝对转相对，计算相对云台偏转角。
-  
-      <center>
-    <img style="border-radius: 0.3125em;
-    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
-    src="能量机关击打流程.png" width = "95%" alt=""/>
-    <br>
-    <div style="color:orange; 1px solid #d9d9d9;
-    display: inline-block;
-    color: #999;
-    padding: 2px;">
-      能量机关击打流程图
-  	</div>
-</center>
+
+![能量机关击打流程图](Image/能量机关击打流程.png)
 
 ## 5. 整体架构
 （1）文件树：
