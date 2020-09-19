@@ -248,13 +248,13 @@ InfantryVisionDetector/
 视觉发送：  
 | Byte0 | Byte1 | Byte2 | Byte3 | Byte4 | Byte5 | Byte6 | Byte7 |
 | ------ | ------ | ------ | ------ | ------ | ------ | ------ |------ |
-|0xaa帧头|PitchAngleData|PitchAngleData|PitchAngleData|PitchAngleData|PitchAngleSymbol|YawAngleData|
+|0xaa帧头|PitchAngleData|PitchAngleData|PitchAngleData|PitchAngleData|PitchAngleSymbol|YawAngleData|YawAngleData|
 
 | Byte8 | Byte9 | Byte10 | Byte11 | Byte12 | Byte13 | Byte14 | Byte15 | 
 | ------ | ------ | ------ | ------ | ------ | ------ | ------ |------ |
-|YawAngleData|YawAngleData|YawAngleData|YawAngleSymbol|IsHaveArmor|distance|IsShoot|CRC_Check|CRC_Check|
+|YawAngleData|YawAngleData|YawAngleSymbol|IsHaveArmor|distance|IsShoot|CRC_Check|CRC_Check|
 
-其中第0位和最后一位分别为帧头和帧尾，用于定位，未来会加上CRC校验。  
+其中第0位为帧头
 第1位到第4位为机器人云台当前pitch角度的数据位，利用共用体转为float数据。  
 第5位为pitch轴角度标志位。  
 第6位到第9位为机器人云台当前yaw角度的数据位，利用共用体转为float数据  ，0代表否，1代表是。  
@@ -262,7 +262,7 @@ InfantryVisionDetector/
 第11位为当前是否识别到目标 ，0代表否，1代表是。  
 第12位为当前与目标间距离，以分米为单位，并舍弃小数。  
 第13位为是否发射弹丸，0代表否，1代表是。  
-第13~15位为CRC校验位。  
+第14~15位为CRC校验位。  
 
 ## 7. 未来展望
 1. 优化识别算法：
