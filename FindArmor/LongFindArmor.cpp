@@ -111,7 +111,7 @@ void LongFindArmor::PreDeal(Mat Src, Mat &gray){
             uchar* b= rgb[0].ptr<uchar>(i);
             for(int j = 0;j<binary.cols;j++){
     //            bin[j] =((((float)r[j]/(float)(g[j]+b[j]/2))*100)>=GGrayValue&&g[j]>r[j]/2)?255:0;
-                bin[j] = b[j]<(g[j]+r[j])*((float)RGrayWeightValue/100)?255:0;
+                bin[j] = (float)b[j]<((float)g[j]+(float)r[j])*((float)RGrayWeightValue/100)?255:0;
             }
         }
         gray = rgb[2]>GrayValue;
@@ -123,7 +123,7 @@ void LongFindArmor::PreDeal(Mat Src, Mat &gray){
             uchar* b= rgb[0].ptr<uchar>(i);
             for(int j = 0;j<binary.cols;j++){
     //            bin[j] =((((float)r[j]/(float)(g[j]+b[j]/2))*100)>=GGrayValue&&g[j]>r[j]/2)?255:0;
-                bin[j] = b[j]<(g[j]+r[j])*((float)BGrayWeightValue/100)?255:0;
+                bin[j] = (float)b[j]<((float)g[j]+(float)r[j])*((float)BGrayWeightValue/100)?255:0;
             }
         }
         gray = rgb[0]>GrayValue;
